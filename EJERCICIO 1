@@ -1,0 +1,41 @@
+Q = 1;
+
+while Q == 1
+    x = sym('x');
+    fprintf('Ecuacion no lineal a resolver: f(x)=x^2-4 \n');
+    fprintf('Intervalos a utilizar: [-5,5] \n');
+    h = input('Ingrese el incremento: \n');
+
+    %%%%%
+    f = @(x) x.^2 - 4;
+    m = -5;
+    n = 5;
+    soluciones = [];
+    
+    %%%%%
+    for a = m:h:n-h %inicia el bucle for donde 'a' va iniciar desde 'm',con paso h(incremento), hasta 'n'-incremento
+        b = a + h;
+
+        % Verificar si hay cambio de signo en el intervalo [a, b]
+        if f(a) * f(b) <= 0
+            % Encontrar la solución en el subintervalo [a, b]
+            solucion = fzero(f, [a, b]); % "fzero" busca una raíz en una función(f) dentro de un intervalo[a, b].
+            
+            % Solo agregar la solución si no está en la lista
+            if ~ismember(solucion, soluciones) % "~ismember" verifica si la raiz(solucion) no está presente en el array(soluciones)
+                soluciones = [soluciones, solucion]; %aqui en un inicio no existen soluciones y se agrega la solucion encontrada en el array
+            end
+        end
+    end
+    
+    %%%%%
+    if isempty(soluciones) % 'isempty' verifica si el array está vacía,
+        fprintf('No existe solucion en el intervalo [-5, 5]\n');
+    else
+        fprintf('Las soluciones son:\n');
+        disp(soluciones);
+    end
+
+    Q = input('Ingrese 1 para continuar y diferente de 1 para terminar. \n');
+    clc;
+end
