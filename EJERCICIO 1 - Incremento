@@ -18,8 +18,13 @@ while Q == 1
 
         % Verificar si hay cambio de signo en el intervalo [a, b]
         if f(a) * f(b) <= 0
-            % Encontrar la solución en el subintervalo [a, b]
-            solucion = fzero(f, [a, b]); % "fzero" busca una raíz en una función(f) dentro de un intervalo[a, b].
+            if f(a)==0 || f(b)==0
+                if f(a)==0
+                    solucion=a;
+                else
+                    solucion=b;
+                end
+            end
             
             % Solo agregar la solución si es menor a la recurrencia
             if ~any(abs(solucion - soluciones) < 10^(-12))
