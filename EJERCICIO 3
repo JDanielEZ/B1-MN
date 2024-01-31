@@ -1,0 +1,43 @@
+Q=1;
+while Q==1
+    %%%%%%
+    n=input('Ingrese el indice de la raiz(n): \n');
+    a=input('Ingrese el numero(a): \n');
+    
+    %%%%%% Funcion de la raiz enesima
+    f=@(x) x^n-a;
+
+    %%%%%% Para evitar respuestas imaginarias o errores
+    if mod(n,2)==0 && a < 0 %si el residuo de la division es cero(osea la raiz(n) es par) y "a" es negativo
+        fprintf('La solucion es imaginaria! \n');
+    else
+        if n < 0
+            fprintf('Error, ponga una raiz enesima positiva! \n');
+        else
+            %%%%% Consideraremos al numero(a) como punto inicial(xi), y para
+            %%%%% asegurar el cambio de signo en el intervalo haremos
+            %%%%% cumplir que "x1^n < a".
+            xi=a;
+            while xi^n >= a
+                xi=xi-1;
+            end
+            %%%%%
+            fprintf('METODO DE BISECCIÓN \n');
+            c=(xi+a)/2;
+            
+            while abs(f(c))>10^(-12) %Recurrencia
+                if f(xi)*f(c)>0
+                    xi=c;
+                else
+                    xf=c;
+                end
+                    c=(xi+xf)/2;
+            end
+            fprintf('La raiz enesima es: %5.2f. \n',c);
+            %%%%%%
+        end
+    end
+    
+    Q=input('Ingrese 1 para continuar y diferente de 1 para terminar \n');
+    clc;
+end
