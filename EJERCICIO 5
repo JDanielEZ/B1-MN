@@ -1,0 +1,28 @@
+Q=1;
+while Q==1
+    x=sym('x');
+    f=input('Ingrese la ecuacion: \n');
+    f=inline(f);
+    
+    m=input('Ingrese el extremo izquierdo: \n');
+    n=input('Ingrese el extremo derecho: \n');
+    
+    a=m; b=n;
+    fprintf('REGLA FALSA \n');
+    
+    c=(a*f(b)-b*f(a))/(f(b)-f(a));
+            
+    while abs(f(c))>10^(-12)
+        if f(a)*f(c)>0
+            a=c;
+        else
+            b=c;
+        end
+    c=(a*f(b)-b*f(a))/(f(b)-f(a));
+    end
+            fprintf('La solución es %5.12f. \n',c);
+            f(c), %para comprobar como ya esta con inline
+    
+    Q=input('Ingrese 1 para continuar y diferente de 1 para terminar \n');
+    clc;
+end
