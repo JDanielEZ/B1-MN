@@ -1,0 +1,58 @@
+Q=1;
+while Q==1
+    x=sym('x'); %para que se exprese en una expresion agebraica
+    f=input('Ingrese la ecuacion: \n');
+    f=inline(f);
+    
+    m=input('Ingrese el extremo izquierdo: \n');
+    n=input('Ingrese el extremo derecho: \n');
+ 
+    %%%%%
+    while abs(f(c))>10^(-12)
+        if f(a)*f(c)>0
+            a=c;
+        else
+            b=c;
+        end
+    c=(a*f(b)-b*f(a))/(f(b)-f(a));
+    end
+    
+    %%%%%
+    fprintf('Expresar la funcion f(x)=0 como x=g(x) \n');
+    g=input('Ingrese g(x) \n');
+    g=inline(g);
+    g1=input('Ingrese la derivada de g(x) \n');
+    g1=inline(g1); %para convertirlo en una expresion algebraica
+    
+    while ~( abs(g1(a))<1 || abs(g1(b))<1 )
+        fprintf('g(x) no cumple la condicion de convergencia. \n');
+        g=input('Ingrese otro g(x): \n');
+        g=inline(g);
+        g1=input('Ingrese la derivada de g(x): \n');
+        g1=inline(g1);
+    end
+    
+    if abs(g1(a))<1
+        
+        soluciones = []; %creamos el array de las soluciones
+
+        while abs(a-g(a))>10^(-12)
+            a=g(a);
+            soluciones = [soluciones, a];
+        end
+    else
+        
+        soluciones = [];
+        
+        while abs(b-g(b))>10^(-12)
+            b=g(b);
+            soluciones = [soluciones, a];
+        end
+    end
+    
+    fprintf('La soluciones son: \n');
+    disp(soluciones);
+        
+    w=input('Para calcular la suma de los n primeros numeros naturales pulse 1. \nPara resolver una ecuacion de segundo grado pulse 2. \n');
+    clc;
+end
