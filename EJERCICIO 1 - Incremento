@@ -21,9 +21,9 @@ while Q == 1
             % Encontrar la solución en el subintervalo [a, b]
             solucion = fzero(f, [a, b]); % "fzero" busca una raíz en una función(f) dentro de un intervalo[a, b].
             
-            % Solo agregar la solución si no está en la lista
-            if ~ismember(solucion, soluciones) % "~ismember" verifica si la raiz(solucion) no está presente en el array(soluciones)
-                soluciones = [soluciones, solucion]; %aqui en un inicio no existen soluciones y se agrega la solucion encontrada en el array
+            % Solo agregar la solución si es menor a la recurrencia
+            if ~any(abs(solucion - soluciones) < 10^(-12))
+                soluciones = [soluciones, solucion];
             end
         end
     end
