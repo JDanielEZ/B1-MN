@@ -16,7 +16,7 @@ while Q == 1
     for a = m:h:n-h %inicia el bucle for donde 'a' va iniciar desde 'm',con paso h(incremento), hasta 'n'-incremento
         b = a + h;
 
-        % Verificar si hay cambio de signo en el intervalo [a, b]
+        % Verificar si hay cambio de signo en el intervalo [a, b] y aplicar metodo busca
         if f(a) * f(b) <= 0
             if f(a)==0 || f(b)==0
                 if f(a)==0
@@ -26,7 +26,8 @@ while Q == 1
                 end
             end
             
-            % Solo agregar la solución si es menor a la recurrencia
+            % Si la diferencia no es cercana a cero, significa que no son
+            % iguales...Por lo tanto la nueva solucion se agrega al array.
             if ~any(abs(solucion - soluciones) < 10^(-12))
                 soluciones = [soluciones, solucion];
             end
