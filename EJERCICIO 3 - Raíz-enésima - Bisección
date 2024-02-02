@@ -25,7 +25,7 @@ while Q==1
             fprintf('METODO DE BISECCIÓN \n');
             c=(xi+a)/2;
             
-            while abs(f(c))>10^(-12) %Recurrencia
+            while abs(f(c))>0.01 
                 if f(xi)*f(c)>0
                     xi=c;
                 else
