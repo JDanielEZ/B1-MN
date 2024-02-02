@@ -1,47 +1,22 @@
-Q = 1;
+x=sym('x');
+% Solicitar la ecuación al usuario y convertirla a función inline
+f = input('\nIngrese la ecuacion no lineal en terminos de x: ', 's');
+f = inline(f);
+fprintf('El intervalo a utilizar es [-5, 5]\n');
+h = input('Ingrese el incremento: ');
 
-while Q == 1
-    x = sym('x');
-    fprintf('Ecuacion no lineal a resolver: f(x)=x^2-4 \n');
-    fprintf('Intervalos a utilizar: [-5,5] \n');
-    h = input('Ingrese el incremento: \n');
+% Definir el rango y el incremento
+m = -5;
+n = 5;
+fprintf('\nRaíces encontradas:\n');
 
-    %%%%%
-    f = @(x) x.^2 - 4;
-    m = -5;
-    n = 5;
-    soluciones = [];
+% Iniciar bucle para incrementos
+for x = m:h:n
+    % Calcular el valor de la ecuación para cada x
+    resultado = f(x);
     
-    %%%%%
-    for a = m:h:n-h %inicia el bucle for donde 'a' va iniciar desde 'm',con paso h(incremento), hasta 'n'-incremento
-        b = a + h;
-
-        % Verificar si hay cambio de signo en el intervalo [a, b] y aplicar metodo busca
-        if f(a) * f(b) <= 0
-            if f(a)==0 || f(b)==0
-                if f(a)==0
-                    solucion=a;
-                else
-                    solucion=b;
-                end
-            end
-            
-            % Si la diferencia no es cercana a cero, significa que no son
-            % iguales...Por lo tanto la nueva solucion se agrega al array.
-            if ~any(abs(solucion - soluciones) < 10^(-12))
-                soluciones = [soluciones, solucion];
-            end
-        end
-    end
-    
-    %%%%%
-    if isempty(soluciones) % 'isempty' verifica si el array está vacía,
-        fprintf('No existe solucion en el intervalo [-5, 5]\n');
-    else
-        fprintf('Las soluciones son:\n');
-        disp(soluciones);
-    end
-
-    Q = input('Ingrese 1 para continuar y diferente de 1 para terminar. \n');
-    clc;
+    % Verificar si el resultado está suficientemente cerca de cero
+    if abs(resultado) < 10^(-12)
+        fprintf('x = %.2f\n', x); % Imprimir la raíz encontrada
+    end
 end
