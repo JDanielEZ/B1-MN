@@ -7,19 +7,19 @@ while Q==1
     h = input('Ingrese el incremento: ');
 
     % Definir el rango y el incremento
-    f = @(x) x.^2-4;
+    f = @(x) x^2-4;
     m = -5;
     n = 5;
 
     % Iniciar bucle para incrementos
+    fprintf('Raíces encontradas: \n');
     for x = m:h:n
         % Calcular el valor de la ecuación para cada x
         resultado = f(x);
     
         % Verificar si el resultado está suficientemente cerca de cero
         if abs(resultado) < 10^(-12)
-            fprintf('\nRaíces encontradas: \n');
-            fprintf('x = %5.2f\n', x); % Imprimir la raíz encontrada
+            fprintf('x = %5.2f \n', x); % Imprimir la raíz encontrada
         end
     end
     
