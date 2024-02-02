@@ -6,7 +6,7 @@ while Q==1
     fprintf('El intervalo a utilizar es [-5, 5] \n');
     h = input('Ingrese el incremento: ');
 
-    % Definir el rango y el incremento
+    % Definir ecuacion, el rango y el incremento
     f = @(x) x^2-4;
     m = -5;
     n = 5;
@@ -20,6 +20,8 @@ while Q==1
         % Verificar si el resultado está suficientemente cerca de cero
         if abs(resultado) < 10^(-12)
             fprintf('x = %5.2f \n', x); % Imprimir la raíz encontrada
+        else
+            fprintf('No se encontraron soluciones. \n');
         end
     end
     
