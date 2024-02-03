@@ -1,19 +1,21 @@
 Q=1;
 while Q==1
     %%%%%%
-    n=input('Ingrese el indice de la raiz(n): \n');
-    a=input('Ingrese el numero(a): \n');
     
+    n=input('Ingrese el indice de la raiz: \n');
+    %%%%%% Para evitar respuestas imaginarias o errores
+    while n < 0 %si el residuo de la division es cero(osea la raiz(n) es par) y "a" es negativo
+        n=input('Ingrese un indice positivo: \n');
+    end
+    a=input('Ingrese el numero(a): \n');
+
     %%%%%% Funcion de la raiz enesima
     f=@(x) x^n-a;
-
-    %%%%%% Para evitar respuestas imaginarias o errores
-    if mod(n,2)==0 && a < 0 %si el residuo de la division es cero(osea la raiz(n) es par) y "a" es negativo
+    
+    if mod(n,2)==0 && a < 0
         fprintf('La solucion es imaginaria! \n');
     else
-        if n < 0
-            fprintf('Error, ponga una raiz enesima positiva! \n');
-        else
+        if mod(n,2)==0
             %%%%% Consideraremos al numero(a) como punto inicial(xi), y para
             %%%%% asegurar el cambio de signo en el intervalo haremos
             %%%%% cumplir que "x1^n < a".
@@ -21,20 +23,43 @@ while Q==1
             while xi^n >= a
                 xi=xi-1;
             end
+        
             %%%%%
             fprintf('METODO DE BISECCIÓN \n');
-            c=(xi+a)/2;
+            xf=a;
+            c=(xi+xf)/2;
             
-            while abs(f(c))>0.01 
+            %%%%%
+            while abs(f(c))>0.01 %mayor al margen error de 0.01
                 if f(xi)*f(c)>0
-                    xi=c;
+                xi=c;
                 else
-                    xf=c;
+                xf=c;
                 end
-                    c=(xi+xf)/2;
+                c=(xi+xf)/2;
+            end
+            fprintf('La raiz enesima es: %5.2f y %5.2f \n',-c,c);
+        else
+            xi=a;
+            while xi^n >= a
+                xi=xi-1;
+            end
+        
+            %%%%%
+            fprintf('METODO DE BISECCIÓN \n');
+            xf=a;
+            c=(xi+xf)/2;
+            
+            %%%%%
+            while abs(f(c))>0.01 %mayor al margen error de 0.01
+                if f(xi)*f(c)>0
+                xi=c;
+                else
+                xf=c;
+                end
+                c=(xi+xf)/2;
             end
             fprintf('La raiz enesima es: %5.2f. \n',c);
-            %%%%%%
         end
     end
     
