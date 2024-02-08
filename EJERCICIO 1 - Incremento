@@ -14,8 +14,9 @@ while Q==1
     for x = m:h:n
         
         a=m; b=a+h;
-        if f(a)*f(b) < 0 % Identificamos los primeros sub-limites de la primera solucion
-            % Aplicamos un sub-incremento y nuevo punto "xf"
+        if f(a)*f(b) < 0
+            % Establecemos el sub-PuntoInicial y generamos un nuevo punto
+            % "xf" mediante un sub-Incremento "h1"
             h1=10^(-12);
             xi=a; xf=xi+h1;
             while f(xi)*f(xf) > 0
