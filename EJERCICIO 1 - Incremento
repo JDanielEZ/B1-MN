@@ -9,14 +9,25 @@ while Q==1
     m = -1000;
     n = 1000;
 
-    % Iniciar bucle para incrementos
+    % Iniciar bucle for para el primer incremento "h"
     fprintf('\nRaíces encontradas: \n');
     for x = m:h:n
-        % Calcular el valor de la ecuación para cada x
-        resultado = f(x);
-    
-        % Verificar si el resultado está suficientemente cerca de cero
-        if abs(resultado) < 10^(-12)
+        
+        a=m; b=a+h;
+        if f(a)*f(b) < 0 % Identificamos los primeros sub-limites de la primera solucion
+            % Aplicamos un sub-incremento y nuevo punto "xf"
+            h1=10^(-12);
+            xi=a; xf=xi+h1;
+            while f(xi)*f(xf) > 0
+                xi=xf; xf=xi+h1;
+            end
+            c=(xi+xf)/2;
+        end
+        
+        % Calcular el valor de la ecuación para cada x; aqui "c" es como "f(c)"
+        c=f(x);
+        % Verificar si "f(c)" está suficientemente cerca de cero
+        if abs(c) < 10^(-12)
             fprintf('x = %5.2f \n', x); % Imprimir la raíz encontrada
         end
     end
