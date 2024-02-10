@@ -44,7 +44,7 @@ while Q == 1
         end
         a = a + h; % Cada vez que la CONDICIONAL encuentra un intervalo con solucion
                    % actualizamos el punto "a" del BUCLE WHILE DE RECORRIDO con el punto "a + h" para 
-                   % que continue desde el punto b = a+h 
+                   % que continue desde el punto "b = a+h" 
                    % (no le pongo "a = b;" para que no se dupliquen las soluciones)
     end
 
