@@ -1,38 +1,53 @@
-Q=1;
-while Q==1
-    x=sym('x');
-    % Solicitar la ecuación al usuario y convertirla a función inline
-    f=input('Ecuacion no lineal a utilizar: \n');
-    f=inline(f);
-    
-    h = 1;
+Q = 1;
+while Q == 1
+    x = sym('x');
+    f = input('Ingrese la ecuación: \n');
+    f = inline(f);
+
     m = -1000;
     n = 1000;
+    h = 1;
 
-    % Iniciar bucle for para el primer incremento "h"
-    fprintf('\nRaíces encontradas: \n');
-    for x = m:h:n
+    %%% BUCLE WHILE DE RECORRIDO %%%
+    a = m;
+    while a < n
         
-        a=m; b=a+h;
-        if f(a)*f(b) < 0
-            % Establecemos el sub-PuntoInicial y generamos un nuevo punto
-            % "xf" mediante un sub-Incremento "h1"
-            h1=10^(-12);
-            xi=a; xf=xi+h1;
-            while f(xi)*f(xf) > 0
-                xi=xf; xf=xi+h1;
+        b = a + h; % Generamos un punto b con el incremento "h" para la CONDICIONAL
+        
+        %%% CONDICIONAL para capturar cada intervalo (a, b) con solucion %%%
+        if f(a) * f(b) < 0.01 % Margen de error o tolerancia
+            
+            %%% BUCLE DE INCREMENTOS %%%%
+            i = 1; % Iniciamos el bucle de incrementos con i = 1 
+            while i <= 11
+                h1 = 10^(-i); % Incremento actualizable "h1". Ej inicial: "10^(-1)"
+                j = a; % Establecemos como punto "j" al "a" de cada intervalo con solucion -> (a, b)
+                k = j + h1; % Generamos un nuevo punto "k" con el incremento actualizable
+                
+                % Blucle para capturar un sub-intervalo de cada intervalo capturado en la 
+                % CONDICIONAL con cada incremento actualizado.
+                while f(j) * f(k) > 0
+                    j = k; k = j + h1;
+                end
+                
+                % Si el incremento actualizable h1 no es == 11, osea "10^(-11)",
+                % no mostrara el resultado
+                if i == 11
+                    c = (j + k) / 2;
+                    fprintf('La solución es: \n');
+                    disp(c); % Para mas precision
+                end
+                a = j; % Establecemos el punto "j" como nuevo punto "a" para cada actualizacion 
+                       % del incremento
+                i = i + 1; % Actualizacion del incremento "h1". Ej siguiente: "10^(-2)"
             end
-            c=(xi+xf)/2;
         end
-        
-        % Calcular el valor de la ecuación para cada x; aqui "c" es como "f(c)"
-        c=f(x);
-        % Verificar si "f(c)" está suficientemente cerca de cero
-        if abs(c) < 10^(-12)
-            fprintf('x = %5.2f \n', x); % Imprimir la raíz encontrada
-        end
+        a = a + h; % Cada vez que la CONDICIONAL encuentra un intervalo con solucion
+                   % actualizamos el punto "a" del BUCLE WHILE DE RECORRIDO con el punto "a + h" para 
+                   % que continue desde el punto b = a+h 
+                   % (no le pongo "a = b;" para que no se dupliquen las soluciones)
     end
-    
-    Q=input('Ingrese 1 para continuar y diferente de 1 para terminar. \n');
-    clc;
+
+    Q = input('Ingrese 1 para continuar y diferente de 1 para salir. \n ');
+    clc; % Limpiamos la pantalla antes de solicitar la entrada del usuario
 end
