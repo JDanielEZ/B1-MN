@@ -10,7 +10,7 @@ while Q == 1
 
     %%% BUCLE WHILE DE RECORRIDO %%%
     a = m;
-    while a < n
+    while a <= n
         
         b = a + h; % Generamos un punto b con el incremento "h" para la CONDICIONAL
         
@@ -43,8 +43,8 @@ while Q == 1
             end
         end
         a = a + h; % Cada vez que la CONDICIONAL encuentra un intervalo con solucion
-                   % actualizamos el punto "a" del BUCLE WHILE DE RECORRIDO con el punto "a + h" para 
-                   % que continue desde el punto "b = a+h" 
+                   % actualizamos el punto "a" del BUCLE WHILE DE RECORRIDO con el punto "a" resultante 
+                   % de los 11 incrementos aplicados, osea practicamente la solucion + h 
                    % (no le pongo "a = b;" para que no se dupliquen las soluciones)
     end
 
