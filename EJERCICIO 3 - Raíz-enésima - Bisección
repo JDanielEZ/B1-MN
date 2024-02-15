@@ -1,43 +1,45 @@
-Q=1;
-while Q==1
-    %%%%%%
-    
+Q = 1;
+while Q == 1
+    x = sym('x');
     n=input('Ingrese el indice de la raiz: \n');
-    %%%%%% Para evitar respuestas imaginarias o errores
-    while n < 0 %si el residuo de la division es cero(osea la raiz(n) es par) y "a" es negativo
-        n=input('Ingrese un indice positivo: \n');
-    end
     a=input('Ingrese el numero(a): \n');
 
-    %%%%%% Funcion de la raiz enesima
     f=@(x) x^n-a;
-    
+
+    xi = -1000;
+    xf = 1000;
+    h = 1;
+    %%% Evaluacion de indices y numeros
     if mod(n,2)==0 && a < 0
         fprintf('La solucion es imaginaria! \n');
     else
-            xi=a;
-            while xi^n >= a
-                xi=xi-1;
-            end
-        
-            %%%%%
-            fprintf('METODO DE BISECCIÓN \n');
-            xf=a;
-            c=(xi+xf)/2;
+        fprintf('METODO DE BISECCIÓN \n');
+        j = xi; % Establecemos como punto "j" al "xi"
+        while j <= xf %%% BUCLE WHILE DE RECORRIDO %%%
+            k = j + h; % Generecion de un nuevo punto "k" con el incremento "h"
             
-            %%%%%
-            while abs(f(c))>0.01 %mayor al margen error de 0.01
-                if f(xi)*f(c)>0
-                xi=c;
-                else
-                xf=c;
+            %%% CONDICIONAL para capturar cada intervalo (j, k) con solucion %%%
+            if f(j) * f(k) < 0.01 % Margen de error o tolerancia
+                %%%%%
+                c=(j+k)/2; % Aplicacion de la primera biseccion
+                %%%%%
+                while abs(f(c))> 0.01 %mayor al margen error de 0.01
+                    if f(j)*f(c)>0
+                        j=c;
+                    else
+                        k=c;
+                    end
+                    c=(j+k)/2; % Aplicacion de consecutivas bisecciones
                 end
-                c=(xi+xf)/2;
+                fprintf('x= %5.12f \n',c);
             end
-            fprintf('La raiz enesima es: %5.2f. \n',c);
-        
-    end
-    
-    Q=input('Ingrese 1 para continuar y diferente de 1 para terminar \n');
-    clc;
+            j = j + h; % Cada vez que la CONDICIONAL encuentra un intervalo con solucion
+                   % actualizamos el punto "j" del BUCLE WHILE DE RECORRIDO con el punto "j" resultante 
+                   % de las bisecciones aplicadas, osea practicamente la solucion + h 
+                   % (no le pongo "j = k;" para que no se dupliquen las soluciones)
+        end
+    end    
+
+    Q = input('Ingrese 1 para continuar y diferente de 1 para salir. \n ');
+    clc; % Limpiamos la pantalla antes de solicitar la entrada del usuario
 end
