@@ -4,18 +4,20 @@ while Q == 1
     n=input('Ingrese el indice de la raiz: \n');
     a=input('Ingrese el numero(a): \n');
 
-    f=@(x) x^n-a;
-
-    xi = -1000;
-    xf = 1000;
+    %f=@(x) x^n-a;
+    f= x^n-a;
+    f=inline(f);
+    
+    li = -1000;
+    ld = 1000;
     h = 1;
     %%% Evaluacion de indices y numeros
     if mod(n,2)==0 && a < 0
         fprintf('La solucion es imaginaria! \n');
     else
         fprintf('METODO DE BISECCIÓN \n');
-        j = xi; % Establecemos como punto "j" al "xi"
-        while j <= xf %%% BUCLE WHILE DE RECORRIDO %%%
+        j = li;
+        while j <= ld %%% BUCLE WHILE DE RECORRIDO %%%
             k = j + h; % Generecion de un nuevo punto "k" con el incremento "h"
             
             %%% CONDICIONAL para capturar cada intervalo (j, k) con solucion %%%
@@ -31,13 +33,16 @@ while Q == 1
                     end
                     c=(j+k)/2; % Aplicacion de consecutivas bisecciones
                 end
-                fprintf('x= %5.12f \n',c);
             end
             j = j + h; % Cada vez que la CONDICIONAL encuentra un intervalo con solucion
                    % actualizamos el punto "j" del BUCLE WHILE DE RECORRIDO con el punto "j" resultante 
                    % de las bisecciones aplicadas, osea practicamente la solucion + h 
                    % (no le pongo "j = k;" para que no se dupliquen las soluciones)
         end
+        fprintf('x= %5.12f \n',c); 
+        %Al final solo mostraria una sola raiz del ultimo intervalo (j,k)con solucion
+        % O tmabien el unico intervalo con solucion que encuentre (ej: n=3
+        % y a= -4 :: x= -1.5878...
     end    
 
     Q = input('Ingrese 1 para continuar y diferente de 1 para salir. \n ');
